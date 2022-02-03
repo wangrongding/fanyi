@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/naming-convention": "warn",
+    "@typescript-eslint/semi": "warn",
+    "curly": "warn",
+    "eqeqeq": "warn",
+    "no-throw-literal": "warn",
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"], //换行符风格 |unix|windows|
+    "comma-dangle": ["error", "never"], //禁止使用拖尾逗号
+    "quotes": ["error", "double"], //使用双引号或单引号
+    "semi": ["error", "always"] //语句末尾使用分号
+  },
+  "ignorePatterns": ["out", "dist", "**/*.d.ts"]
+}
