@@ -31,13 +31,13 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:fanyi.helloWorld"
+		"*"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "fanyi.helloWorld",
+				"command": "sayHello",
 				"title": "Hello World"
 			}
 		]
