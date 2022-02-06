@@ -93,7 +93,8 @@ function formatText(res: any) {
     phonetic,
     explains,
     webTrans = "**网络释义:**",
-    machineTrans = `  \n**机器翻译:** ${res.translation || ""}  \n`;
+    machineTrans = `  \n**机器翻译:** ${res.translation || ""}  \n`,
+    footer = "  \n---------------- by 前端超人-荣顶 ----------------";
 
   if (res.basic) {
     phonetic = `**发音:** ${res.basic ? res.basic.phonetic : "无"}  \n`;
@@ -109,5 +110,5 @@ function formatText(res: any) {
       )}`;
     }
   }
-  return content + phonetic + explains + webTrans + machineTrans;
+  return content + phonetic + explains + webTrans + machineTrans + footer;
 }
