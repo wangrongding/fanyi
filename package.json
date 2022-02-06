@@ -2,8 +2,13 @@
 	"name": "fanyi",
 	"displayName": "fanyi",
 	"description": "translation,翻译,有道翻译",
-	"version": "0.0.2",
+	"version": "1.0.0",
 	"license": "MIT",
+	"publisher": "wangrongding",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wangrongding/fanyi"
+	},
 	"tasks": [
 		{
 			"type": "npm",
@@ -32,7 +37,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
