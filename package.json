@@ -5,6 +5,7 @@
 	"version": "1.0.0",
 	"license": "MIT",
 	"publisher": "wangrongding",
+	"icon": "icon.jpg",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/wangrongding/fanyi"
