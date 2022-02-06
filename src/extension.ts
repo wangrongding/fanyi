@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
         markdownString.isTrusted = true;
         return new vscode.Hover(markdownString);
       }
-    }
+    },
   });
 
   // The command has been defined in the package.json file
@@ -53,18 +53,20 @@ export function deactivate() {}
 
 // 请求翻译
 function translation(text: string) {
-  let query = querystring
-    .escape(text)
-    .replace(/([A-Z])/g, " $1")
-    .replace(/-/g, " ")
-    .toLowerCase();
+  let query = querystring.escape(
+    text
+      .replace(/([A-Z])/g, " $1")
+      .replace(/-/g, " ")
+      .toLowerCase()
+  );
+  console.log("🚀🚀🚀 / query", query);
   // 1.用于请求的选项
   let options = {
     host: "fanyi.youdao.com",
     port: "80",
     path:
       "/openapi.do?keyfrom=translation-tool&key=1730699468&type=data&doctype=json&version=1.1&q=" +
-      query
+      query,
   };
 
   // let options = ` http://aidemo.youdao.com/trans?q=${query}&&from=Auto&&to=Auto`;
@@ -76,8 +78,10 @@ function translation(text: string) {
       // 不断更新数据
       response.on("data", function (data: any) {
         let result = JSON.parse(data);
+        console.log("🚀🚀🚀 / result", result);
         resolve(result);
       });
+
       response.on("end", function () {
         console.log("---------------- by 前端超人 ----------------");
       });
@@ -90,16 +94,18 @@ function translation(text: string) {
 // 格式化翻译结果
 function formatText(res: any) {
   let content = "### 翻译：\n",
-    phonetic,
-    explains,
+    phonetic = `**发音:**  \n`,
+    explains = `**翻译:**  \n`,
     webTrans = "**网络释义:**",
     machineTrans = `  \n**机器翻译:** ${res.translation || ""}  \n`,
     footer = "  \n---------------- by 前端超人-荣顶 ----------------";
 
   if (res.basic) {
-    phonetic = `**发音:** ${res.basic ? res.basic.phonetic : "无"}  \n`;
+    phonetic = `**发音:** ${
+      res.basic.phonetic ? res.basic.phonetic : "无"
+    }  \n`;
     explains = `**翻译:**  \n${
-      res.basic ? res.basic.explains.join("  \n") : "无"
+      res.basic.explains ? res.basic.explains.join("  \n") : "无"
     }  \n`;
   }
 
