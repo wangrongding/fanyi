@@ -10,46 +10,76 @@ export function activate(context: vscode.ExtensionContext) {
   // This line of code will only be executed once when your extension is activated
   console.log("Congratulations,扩展 fanyi 已经激活!");
 
+  //注册hover事件
   vscode.languages.registerHoverProvider("*", {
-    async provideHover(document, position, token) {
-      const editor = vscode.window.activeTextEditor;
-      if (!editor) {
-        return; // No open text editor
-      }
-      const selection = editor.selection;
-      const text = document.getText(selection);
-
-      // Insert header
-      // editor.edit((eb) => {
-      //   eb.insert(editor.document.positionAt(0), `"文本"`);
-      // });
-
-      if (text) {
-        let res = (await translation(text)) as any;
-        let content = formatText(res);
-        const markdownString = new vscode.MarkdownString();
-        markdownString.appendMarkdown(content);
-        markdownString.supportHtml = true;
-        markdownString.isTrusted = true;
-        return new vscode.Hover(markdownString);
-      }
-    },
+    provideHover: hoverEvent,
   });
+  //hover事件
+  async function hoverEvent() {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+      return; // No open text editor
+    }
+    const selection = editor.selection;
+    const text = editor.document.getText(selection);
+    console.log("🚀🚀🚀 / text", text, selection);
+    if (text) {
+      let res = (await translation(text)) as any;
+      let content = formatText(res);
+      const markdownString = new vscode.MarkdownString();
+      markdownString.appendMarkdown(content);
+      markdownString.supportHtml = true;
+      markdownString.isTrusted = true;
+      return new vscode.Hover(markdownString);
+    }
+  }
+  async function menuTranslation() {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+      return; // No open text editor
+    }
+    const selection = editor.selection;
+    const text = editor.document.getText(selection);
+  }
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand("sayHello", () => {
-    // The code you place here will be executed every time your command is executed
-    // Display a message box to the user
-    vscode.window.showInformationMessage("Hello World from fanyi!");
+  //注册命令，回调函数接收一个可选参数uri
+  let disposable = vscode.commands.registerCommand("sayHello", (uri) => {
+    vscode.window.showInformationMessage("当前文件路径:" + uri);
+    menuTranslation();
   });
-
-  context.subscriptions.push(disposable);
+  //文本编辑器命令与普通命令不同，它们仅在有被编辑器被激活时调用才生效，此外，这个命令可以访问到当前活动编辑器textEditor
+  let editorCommand = vscode.commands.registerTextEditorCommand(
+    "editorCommand",
+    (textEditor, edit) => {
+      console.log(textEditor, edit);
+    }
+  );
+  context.subscriptions.push(disposable, editorCommand);
 }
 
-// this method is called when your extension is deactivated
+// 当扩展禁用时触发
 export function deactivate() {}
+
+// 获取所有命令
+function getCommands() {
+  vscode.commands.getCommands().then((allCommands) => {
+    console.log("所有命令：", allCommands);
+  });
+}
+
+//执行命令
+function executeCommand() {
+  // 命令都是返回一个类似于Promise的Thenable对象，如果发现api里面返回的是这个对象，说明这个方法不是直接返回结果的。
+  vscode.commands.executeCommand("sayHello", "editorCommand").then((result) => {
+    console.log("命令结果", result);
+  });
+
+  // 如何在VS代码中打开新文件夹的示例
+  let uri = vscode.Uri.file("/some/path/to/folder");
+  vscode.commands.executeCommand("vscode.openFolder", uri).then((success) => {
+    console.log(success);
+  });
+}
 
 // 请求翻译
 function translation(text: string) {
@@ -59,7 +89,7 @@ function translation(text: string) {
       .replace(/-/g, " ")
       .toLowerCase()
   );
-  console.log("🚀🚀🚀 / query", query);
+  // console.log("🚀🚀🚀 / query", query);
   // 1.用于请求的选项
   let options = {
     host: "fanyi.youdao.com",
@@ -78,12 +108,12 @@ function translation(text: string) {
       // 不断更新数据
       response.on("data", function (data: any) {
         let result = JSON.parse(data);
-        console.log("🚀🚀🚀 / result", result);
+        // console.log("🚀🚀🚀 / result", result);
         resolve(result);
       });
 
       response.on("end", function () {
-        console.log("---------------- by 前端超人 ----------------");
+        // console.log("---------------- by 前端超人 ----------------");
       });
     }
     // 向服务端发送请求
@@ -118,3 +148,12 @@ function formatText(res: any) {
   }
   return content + phonetic + explains + webTrans + machineTrans + footer;
 }
+
+/* 
+
+ // 插入文本
+      // editor.edit((eb) => {
+      //   eb.insert(editor.document.positionAt(0), `"文本"`);
+      // });
+
+*/

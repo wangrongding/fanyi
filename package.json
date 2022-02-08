@@ -45,9 +45,32 @@
 		"commands": [
 			{
 				"command": "sayHello",
-				"title": "Hello World"
+				"title": "测试命令"
+			},
+			{
+				"command": "editorCommand",
+				"title": "文本编辑器命令"
+			},
+			{
+				"command": "markdown.showPreview",
+				"title": "预览markdown"
 			}
-		]
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorFocus",
+					"command": "editorCommand",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceLangId == markdown",
+					"command": "markdown.showPreview",
+					"alt": "markdown.showPreviewToSide",
+					"group": "navigation"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run package",
