@@ -9,14 +9,14 @@
   "rules": {
     "@typescript-eslint/naming-convention": "warn",
     "@typescript-eslint/semi": "warn",
-    "curly": "warn",
-    "eqeqeq": "warn",
-    "no-throw-literal": "warn",
-    "indent": ["error", 2],
+    "indent": ["error", 2], //缩进
     "linebreak-style": ["error", "unix"], //换行符风格 |unix|windows|
-    "comma-dangle": ["error", "never"], //禁止使用拖尾逗号
     "quotes": ["error", "double"], //使用双引号或单引号
-    "semi": ["error", "always"] //语句末尾使用分号
+    "semi": ["error", "always"], //语句末尾使用分号
+    "comma-dangle": ["error", "always"], //使用拖尾逗号
+    "curly": "warn", //强制所有控制语句使用一致的括号风格
+    "eqeqeq": "warn", //需要使用 `===` and `!==`
+    "no-throw-literal": "warn" //禁止抛出异常字面量
   },
   "ignorePatterns": ["out", "dist", "**/*.d.ts"]
 }
