@@ -124,15 +124,15 @@ function translation(text: string) {
 // 格式化翻译结果
 function formatText(res: any) {
   let content = "### 翻译：\n",
-    phonetic = `**发音:**  \n`,
-    explains = `**翻译:**  \n`,
+    phonetic = "**发音:**  \n",
+    explains = "**翻译:**  \n",
     webTrans = "**网络释义:**",
     machineTrans = `  \n**机器翻译:** ${res.translation || ""}  \n`,
     footer = "  \n---------------- by 前端超人-荣顶 ----------------";
 
   if (res.basic) {
     phonetic = `**发音:** ${
-      res.basic.phonetic ? res.basic.phonetic : "无"
+      res.basic.phonetic ? "[ " + res.basic.phonetic + " ]" : "无"
     }  \n`;
     explains = `**翻译:**  \n${
       res.basic.explains ? res.basic.explains.join("  \n") : "无"
