@@ -1,123 +1,123 @@
 {
-	"name": "fanyi",
-	"displayName": "fanyi",
-	"description": "translation,翻译,有道翻译",
-	"version": "1.0.3",
-	"license": "MIT",
-	"publisher": "wangrongding",
-	"icon": "icon.png",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/wangrongding/fanyi"
-	},
-	"main": "./dist/extension.js",
-	"scripts": {
-		"vscode:prepublish": "yarn run package",
-		"compile": "webpack",
-		"watch": "webpack --watch",
-		"package": "webpack --mode production --devtool hidden-source-map",
-		"compile-tests": "tsc -p . --outDir out",
-		"watch-tests": "tsc -p . -w --outDir out",
-		"pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
-		"test": "node ./out/test/runTest.js",
-		"lint": "eslint src --ext ts --fix",
-		"cz": "cz",
-		"prepare": "husky install"
-	},
-	"engines": {
-		"vscode": "^1.63.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onStartupFinished"
-	],
-	"contributes": {
-		"commands": [
-			{
-				"command": "sayHello",
-				"title": "测试命令"
-			},
-			{
-				"command": "editorCommand",
-				"title": "文本编辑器命令"
-			},
-			{
-				"command": "markdown.showPreview",
-				"title": "预览markdown"
-			}
-		],
-		"menus": {
-			"editor/context": [
-				{
-					"when": "editorFocus",
-					"command": "editorCommand",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == markdown",
-					"command": "markdown.showPreview",
-					"alt": "markdown.showPreviewToSide",
-					"group": "navigation"
-				}
-			]
-		}
-	},
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "build",
-			"group": "build",
-			"problemMatcher": [
-				"$ts-webpack",
-				"$tslint-webpack"
-			]
-		},
-		{
-			"type": "npm",
-			"script": "watch",
-			"group": "build",
-			"isBackground": true,
-			"problemMatcher": [
-				"$ts-webpack-watch",
-				"$tslint-webpack-watch"
-			]
-		}
-	],
-	"lint-staged": {
-		"*.{ts,js,vue}": [
-			"eslint",
-			"echo '冲呀~'"
-		]
-	},
-	"devDependencies": {
-		"@commitlint/cli": "^16.1.0",
-		"@commitlint/config-conventional": "^16.0.0",
-		"@types/glob": "^7.2.0",
-		"@types/mocha": "^9.0.0",
-		"@types/node": "14.x",
-		"@types/vscode": "^1.63.0",
-		"@typescript-eslint/eslint-plugin": "^5.9.1",
-		"@typescript-eslint/parser": "^5.9.1",
-		"@vscode/test-electron": "^2.0.3",
-		"commitizen": "^4.2.4",
-		"commitlint-config-cz": "^0.13.3",
-		"cz-conventional-changelog": "3.3.0",
-		"cz-customizable": "^6.3.0",
-		"eslint": "^8.6.0",
-		"glob": "^7.2.0",
-		"husky": "^7.0.4",
-		"lint-staged": "^12.3.3",
-		"mocha": "^9.1.3",
-		"ts-loader": "^9.2.6",
-		"typescript": "^4.5.4",
-		"webpack": "^5.66.0",
-		"webpack-cli": "^4.9.1"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-customizable"
-		}
-	}
+  "name": "fanyi",
+  "displayName": "fanyi",
+  "description": "translation,translate,翻译,滑词翻译,有道翻译",
+  "version": "1.0.5",
+  "license": "MIT",
+  "publisher": "wangrongding",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wangrongding/fanyi"
+  },
+  "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "test": "node ./out/test/runTest.js",
+    "lint": "eslint src --ext ts --fix",
+    "cz": "cz",
+    "prepare": "husky install"
+  },
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "sayHello",
+        "title": "测试命令"
+      },
+      {
+        "command": "editorCommand",
+        "title": "文本编辑器命令"
+      },
+      {
+        "command": "markdown.showPreview",
+        "title": "预览markdown"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorFocus",
+          "command": "editorCommand",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown.showPreview",
+          "alt": "markdown.showPreviewToSide",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "group": "build",
+      "problemMatcher": [
+        "$ts-webpack",
+        "$tslint-webpack"
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "watch",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [
+        "$ts-webpack-watch",
+        "$tslint-webpack-watch"
+      ]
+    }
+  ],
+  "lint-staged": {
+    "*.{ts,js,vue}": [
+      "eslint",
+      "echo '冲呀~'"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.1.0",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.63.0",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "@vscode/test-electron": "^2.0.3",
+    "commitizen": "^4.2.4",
+    "commitlint-config-cz": "^0.13.3",
+    "cz-conventional-changelog": "3.3.0",
+    "cz-customizable": "^6.3.0",
+    "eslint": "^8.6.0",
+    "glob": "^7.2.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.3",
+    "mocha": "^9.1.3",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.4",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    }
+  }
 }
