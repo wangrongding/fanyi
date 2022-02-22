@@ -91,15 +91,15 @@ function translation(text: string) {
   );
   // console.log("🚀🚀🚀 / query", query);
   // 1.用于请求的选项
-  let options = {
-    host: "fanyi.youdao.com",
-    port: "80",
-    path:
-      "/openapi.do?keyfrom=translation-tool&key=1730699468&type=data&doctype=json&version=1.1&q=" +
-      query,
-  };
+  // let options = {
+  //   host: "fanyi.youdao.com",
+  //   port: "80",
+  //   path:
+  //     "/openapi.do?keyfrom=translation-tool&key=1730699468&type=data&doctype=json&version=1.1&q=" +
+  //     query,
+  // };
 
-  // let options = ` http://aidemo.youdao.com/trans?q=${query}&&from=Auto&&to=Auto`;
+  let options = `http://aidemo.youdao.com/trans?q=${query}&&from=Auto&&to=Auto`;
 
   return new Promise((resolve, reject) => {
     // 处理响应的回调函数
