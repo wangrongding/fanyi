@@ -2,7 +2,7 @@
   "name": "fanyi",
   "displayName": "fanyi",
   "description": "translation,translate,翻译,滑词翻译,有道翻译",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "publisher": "wangrongding",
   "icon": "icon.png",
@@ -119,5 +119,8 @@
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
   }
 }

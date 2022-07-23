@@ -3,6 +3,7 @@
 import * as vscode from "vscode";
 const querystring = require("querystring");
 const http = require("http");
+const { axios } = require("./request.ts");
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -25,7 +26,15 @@ export function activate(context: vscode.ExtensionContext) {
     console.log("🚀🚀🚀 / text", text, selection);
     if (text) {
       let res = (await translation(text)) as any;
-      let content = formatText(res);
+      // ================
+      // let content = formatText(res);
+      // ================
+      // let content = `\n------------------------------------------\n 🚀 翻译: ${res} \n---------------- by 前端超人-荣顶 ----------------`;
+      let content =
+        "-----------------------------------------  \n" +
+        "🚀 翻译：  \n" +
+        res +
+        "  \n-----------------------------------------";
       const markdownString = new vscode.MarkdownString();
       markdownString.appendMarkdown(content);
       markdownString.supportHtml = true;
@@ -83,42 +92,91 @@ function executeCommand() {
 
 // 请求翻译
 function translation(text: string) {
-  let query = querystring.escape(
+  console.log(querystring.unescape(text));
+
+  // let query = querystring.escape(
+  //   text
+  //     .replace(/([A-Z])/g, " $1")
+  //     .replace(/-/g, " ")
+  //     .toLowerCase()
+  // );
+  let query = querystring.unescape(
     text
       .replace(/([A-Z])/g, " $1")
       .replace(/-/g, " ")
       .toLowerCase()
   );
-  // console.log("🚀🚀🚀 / query", query);
-  // 1.用于请求的选项
-  // let options = {
-  //   host: "fanyi.youdao.com",
-  //   port: "80",
-  //   path:
-  //     "/openapi.do?keyfrom=translation-tool&key=1730699468&type=data&doctype=json&version=1.1&q=" +
-  //     query,
-  // };
 
   let options = `http://aidemo.youdao.com/trans?q=${query}&&from=Auto&&to=Auto`;
 
   return new Promise((resolve, reject) => {
-    // 处理响应的回调函数
-    function callback(response: any) {
-      response.setEncoding("utf-8");
-      // 不断更新数据
-      response.on("data", function (data: any) {
-        let result = JSON.parse(data);
-        // console.log("🚀🚀🚀 / result", result);
-        resolve(result);
+    // // 处理响应的回调函数
+    // function callback(response: any) {
+    //   response.setEncoding("utf-8");
+    //   // 不断更新数据
+    //   response.on("data", function (data: any) {
+    //     let result = JSON.parse(data);
+    //     // console.log("🚀🚀🚀 / result", result);
+    //     resolve(result);
+    //   });
+    //   response.on("end", function () {
+    //     // console.log("---------------- by 前端超人 ----------------");
+    //   });
+    // }
+    // // 向服务端发送请求
+    // let req = http.request(options, callback);
+    // req.end();
+    // ================================================================
+    /* 
+    post("http://47.95.239.198:9521/translate", {
+      data: { text: queryStr, source_lang: "auto", target_lang: "ZH" },
+    })*/
+    /* eslint-disable */
+    // const postData = JSON.stringify({
+    //   text: query,
+    //   source_lang: "auto",
+    //   target_lang: "ZH",
+    // });
+    // // DeepL API
+    // let options = {
+    //   protocol: "http:",
+    //   hostname: "47.95.239.198",
+    //   port: 9521,
+    //   path: "/translate",
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Content-Length": Buffer.byteLength(postData),
+    //   },
+    // };
+    // // 创建请求
+    // const req = http.request(options, (res: any) => {
+    //   res.setEncoding("utf8");
+    //   res.on("data", (chunk: any) => {
+    //     console.log(`BODY: ${chunk}`);
+    //   });
+    //   res.on("end", () => {
+    //     console.log("---------------- by 前端超人 ----------------");
+    //   });
+    // });
+    // req.on("error", (e: any) => {
+    //   console.error(`problem with request: ${e.message}`);
+    // });
+    // // Write data to request body
+    // req.write(postData);
+    // req.end();
+    //===================================
+    console.log("🚀🚀🚀 / query", query);
+    axios
+      .post("http://47.95.239.198:9521/translate", {
+        data: { text: query, source_lang: "auto", target_lang: "ZH" },
+      })
+      .then((res: any) => {
+        if (res.code === 200) {
+          console.log(`${"🚀🚀🚀 翻译: "}${querystring.unescape(res.data)}`);
+          resolve(res.data);
+        }
       });
-
-      response.on("end", function () {
-        // console.log("---------------- by 前端超人 ----------------");
-      });
-    }
-    // 向服务端发送请求
-    let req = http.request(options, callback);
-    req.end();
   });
 }
 // 格式化翻译结果
@@ -149,11 +207,7 @@ function formatText(res: any) {
   return content + phonetic + explains + webTrans + machineTrans + footer;
 }
 
-/* 
-
- // 插入文本
-      // editor.edit((eb) => {
-      //   eb.insert(editor.document.positionAt(0), `"文本"`);
-      // });
-
-*/
+// // 插入文本;
+// editor.edit((eb) => {
+//   eb.insert(editor.document.positionAt(0), `"文本"`);
+// });
