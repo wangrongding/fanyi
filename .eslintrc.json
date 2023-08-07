@@ -14,7 +14,7 @@
     "quotes": ["error", "double"], //使用双引号或单引号
     "semi": ["error", "always"], //语句末尾使用分号
     "comma-dangle": ["error", "always-multiline"], //使用拖尾逗号
-    "curly": "warn", //强制所有控制语句使用一致的括号风格
+    "curly": "off", //强制所有控制语句使用一致的括号风格
     "eqeqeq": "warn", //需要使用 `===` and `!==`
     "no-throw-literal": "warn" //禁止抛出异常字面量
   },
