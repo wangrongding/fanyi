@@ -36,8 +36,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "test-command",
-        "title": "测试命令"
+        "command": "fanyi-disable",
+        "title": "关闭划词翻译"
+      },
+      {
+        "command": "fanyi-enable",
+        "title": "开启划词翻译"
       },
       {
         "command": "editorCommand",

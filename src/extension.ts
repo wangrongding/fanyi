@@ -2,6 +2,9 @@
 import * as vscode from "vscode";
 const querystring = require("querystring");
 const http = require("http");
+
+// 全局开关
+let isEnabled = true;
 // 当你的扩展被激活时，这个方法被调用
 // 扩展功能在第一次执行命令时就被激活
 export function activate(context: vscode.ExtensionContext) {
@@ -13,19 +16,27 @@ export function activate(context: vscode.ExtensionContext) {
     provideHover: handleSelectTextHover,
   });
 
-  //注册命令，回调函数接收一个可选参数uri
-  let disposable = vscode.commands.registerCommand("test-command", uri => {
-    vscode.window.showInformationMessage("当前文件路径:" + uri);
+  // 关闭翻译功能命令
+  let disable = vscode.commands.registerCommand("fanyi-disable", () => {
+    vscode.window.showInformationMessage("关闭了翻译功能");
+    isEnabled = false;
   });
+  // 开启翻译功能命令
+  let enable = vscode.commands.registerCommand("fanyi-enable", () => {
+    vscode.window.showInformationMessage("开启了翻译功能");
+    isEnabled = true;
+  });
+
   //文本编辑器命令与普通命令不同，它们仅在有被编辑器被激活时调用才生效，此外，这个命令可以访问到当前活动编辑器textEditor
   let editorCommand = vscode.commands.registerTextEditorCommand("editorCommand", (textEditor, edit) => {
     console.log(textEditor, edit);
   });
-  context.subscriptions.push(disposable, editorCommand);
+  context.subscriptions.push(disable, enable, editorCommand);
 }
 
 //hover事件
 async function handleSelectTextHover(document: vscode.TextDocument, position: vscode.Position) {
+  if (!isEnabled) return;
   const editor = vscode.window.activeTextEditor;
   const selection = editor?.selection;
   // No open text editor or no selection
