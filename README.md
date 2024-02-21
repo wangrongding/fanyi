@@ -18,6 +18,14 @@
 
 ![](https://assets.fedtop.com/picbed/202308021642558.png)
 
+### 命令：
+
+- Windos: `Ctrl+Shift+P` 或 `F1` 打开命令面板  
+- Mac: `Cmd+Shift+P` 或 `F1` 打开命令面板  
+输入以下：  
+fanyi-disable : 关闭划词翻译  
+fanyi-enable: 开启划词翻译
+
 ## 开发
 
 你也可根据自己需求修改插件 [插件 github 地址](https://github.com/wangrongding/fanyi)
